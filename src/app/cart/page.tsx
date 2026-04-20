@@ -22,7 +22,7 @@ export default function CartPage() {
     handleDecrease,
     handleRemove,
   } = useHandleCart()
-  
+
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [checkingAuth, setCheckingAuth] = useState(true)
 
