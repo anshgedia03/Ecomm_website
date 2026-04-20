@@ -1,14 +1,15 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { Suspense, lazy, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import ProductCard from "@/components/admin/product"
 import useHandleProduct from "@/hooks/useHandleProduct"
 import { productSchema } from "@/schema/product"
 import { verifyAdminAccess } from "@/services/accessServices"
 import type { Product, ProductFormValues } from "@/types"
+
+const ProductCard = lazy(() => import("@/components/admin/product"))
 
 const defaultFormValues: ProductFormValues = {
   title: "",
@@ -29,8 +30,8 @@ export default function AdminPage() {
     deleteProductHandler,
   } = useHandleProduct()
   const [editingId, setEditingId] = useState<string | null>(null)
-  const [isAuthorized, setIsAuthorized] = useState(false)
-  const [isChecking, setIsChecking] = useState(true)
+  const access = useMemo(() => verifyAdminAccess(), [])
+  const isAuthorized = access.isAuthorized
 
   const {
     register,
@@ -43,17 +44,10 @@ export default function AdminPage() {
   })
 
   useEffect(() => {
-    const access = verifyAdminAccess()
-
     if (!access.isAuthorized) {
       router.push(access.redirectTo)
-      setIsChecking(false)
-      return
     }
-
-    setIsAuthorized(true)
-    setIsChecking(false)
-  }, [router])
+  }, [access, router])
 
   useEffect(() => {
     if (isAuthorized) {
@@ -105,14 +99,7 @@ export default function AdminPage() {
 
   return (
     <main className="min-h-screen bg-gray-50 px-4 py-24 sm:px-6 lg:px-8">
-      {isChecking ? (
-        <div className="flex min-h-[60vh] items-center justify-center">
-          <div className="text-center">
-            <div className="mb-4 inline-block h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-black"></div>
-            <p className="text-gray-600">Verifying access...</p>
-          </div>
-        </div>
-      ) : !isAuthorized ? (
+      {!isAuthorized ? (
         <div className="flex min-h-[60vh] items-center justify-center">
           <div className="text-center">
             <p className="text-lg text-gray-600">Redirecting...</p>
@@ -246,16 +233,24 @@ export default function AdminPage() {
                   No products found.
                 </div>
               ) : (
-                <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                  {products.map((product) => (
-                    <ProductCard
-                      key={product.id}
-                      data={product}
-                      onEdit={handleEdit}
-                      onDelete={handleDelete}
-                    />
-                  ))}
-                </div>
+                <Suspense
+                  fallback={
+                    <div className="rounded-2xl border bg-white p-8 text-center text-gray-500 shadow-sm">
+                      Loading products...
+                    </div>
+                  }
+                >
+                  <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                    {products.map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        data={product}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
+                      />
+                    ))}
+                  </div>
+                </Suspense>
               )}
             </div>
           </div>

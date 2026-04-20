@@ -20,6 +20,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { MESSAGES } from "@/constants/CONSTANTS"
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const { loading, signupWithPassword } = useAuth()
@@ -32,12 +33,12 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
     e.preventDefault()
 
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match")
+      toast.error(MESSAGES.VALIDATION.PASSWORDS_MISMATCH)
       return
     }
 
     if (password.length < 8) {
-      toast.error("Password must be at least 8 characters long")
+      toast.error(MESSAGES.VALIDATION.PASSWORD_MIN_LENGTH)
       return
     }
 

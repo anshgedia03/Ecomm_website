@@ -7,9 +7,9 @@ import type { VerifySessionOptions, VerifySessionResult } from "@/types"
 
 const DEFAULT_MESSAGES = {
   noTokenMessage: MESSAGES.AUTH.REQUIRED,
-  expiredTokenMessage: "Session expired. Please login again",
-  invalidTokenMessage: "Invalid session. Please login again",
-  missingAuthMessage: "Authentication required. Please login",
+  expiredTokenMessage: MESSAGES.AUTH.SESSION_EXPIRED,
+  invalidTokenMessage: MESSAGES.AUTH.INVALID_SESSION,
+  missingAuthMessage: MESSAGES.AUTH.AUTH_REQUIRED,
 } satisfies Required<Omit<VerifySessionOptions, "requireDecodedToken">>
 
 export function verifySession(options?: VerifySessionOptions): VerifySessionResult {

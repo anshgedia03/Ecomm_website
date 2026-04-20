@@ -28,7 +28,7 @@ export default function useHandleCart() {
           setLoading(false)
         },
         () => {
-          toast.error("Failed to sync cart")
+          toast.error(MESSAGES.CART.SYNC_FAILED)
           setLoading(false)
         }
       )

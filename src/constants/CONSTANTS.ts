@@ -29,6 +29,9 @@ export const MESSAGES = {
     INVALID_CREDENTIALS: "Invalid credentials",
     SIGNUP_SUCCESS: "Account created successfully",
     SIGNUP_FAILED: "Signup failed",
+    SESSION_EXPIRED: "Session expired. Please login again",
+    INVALID_SESSION: "Invalid session. Please login again",
+    AUTH_REQUIRED: "Authentication required. Please login",
     REQUIRED: "Please login to continue",
   },
   CART: {
@@ -37,7 +40,12 @@ export const MESSAGES = {
     REMOVE_SUCCESS: "Item removed from cart",
     REMOVE_FAILED: "Failed to remove item",
     UPDATE_FAILED: "Failed to update quantity",
+    SYNC_FAILED: "Failed to sync cart",
     AUTH_REQUIRED: "Please login to add items to cart",
+  },
+  VALIDATION: {
+    PASSWORDS_MISMATCH: "Passwords do not match",
+    PASSWORD_MIN_LENGTH: "Password must be at least 8 characters long",
   },
   PRODUCT: {
     FETCH_FAILED: "Failed to fetch products",

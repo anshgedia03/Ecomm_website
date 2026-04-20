@@ -8,6 +8,7 @@ import { toast } from "sonner"
 import { auth } from "@/lib/firebase/client"
 import { saveTokenToLocalStorage } from "@/utils/tokenUtils"
 import { login, signup } from "@/services/authService"
+import { MESSAGES } from "@/constants/CONSTANTS"
 
 export default function useAuth() {
   const router = useRouter()
@@ -31,7 +32,7 @@ export default function useAuth() {
         router.push("/")
       }
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : "Login failed"
+      const message = error instanceof Error ? error.message : MESSAGES.AUTH.LOGIN_FAILED
       toast.error(message)
     } finally {
       setLoading(false)
@@ -54,7 +55,7 @@ export default function useAuth() {
 
       router.push("/login")
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : "Signup failed"
+      const message = error instanceof Error ? error.message : MESSAGES.AUTH.SIGNUP_FAILED
       toast.error(message)
     } finally {
       setLoading(false)
