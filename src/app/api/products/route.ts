@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
-import { collection, getDocs } from "firebase/firestore"
-import { db } from "@/lib/firebase/client"
 import { getAdminDb } from "@/lib/firebase/admin"
 import { verifyAdminToken } from "@/services/accessServices"
 import { productSchema } from "@/schema/product"
 
 export async function GET() {
   try {
-    const snapshot = await getDocs(collection(db, "products"))
+    const adminDb = getAdminDb()
+    const snapshot = await adminDb.collection("products").get()
 
     const products = snapshot.docs.map((doc) => ({
       id: doc.id,
@@ -15,7 +14,7 @@ export async function GET() {
     }))
 
     return NextResponse.json({ products }, { status: 200 })
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: "Failed to fetch products" },
       { status: 500 }
@@ -62,8 +61,7 @@ export async function POST(request: NextRequest) {
       { message: "Product created", id: docRef.id },
       { status: 201 }
     )
-  } catch (error) {
-    console.error("Error creating product:", error)
+  } catch {
     return NextResponse.json(
       { message: "Failed to create product" },
       { status: 500 }

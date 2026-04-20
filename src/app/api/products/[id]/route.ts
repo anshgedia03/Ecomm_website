@@ -77,8 +77,7 @@ export async function PUT(request: NextRequest, { params }: RouteIdParams) {
       { message: "Product updated" },
       { status: 200 }
     )
-  } catch (error) {
-    console.error("Error updating product:", error)
+  } catch {
     return NextResponse.json(
       { message: "Failed to update product" },
       { status: 500 }
@@ -104,8 +103,7 @@ export async function DELETE(request: NextRequest, { params }: RouteIdParams) {
       { message: "Product deleted" },
       { status: 200 }
     )
-  } catch (error) {
-    console.error("Error deleting product:", error)
+  } catch {
     return NextResponse.json(
       { message: "Failed to delete product" },
       { status: 500 }

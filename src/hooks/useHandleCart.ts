@@ -27,8 +27,7 @@ export default function useHandleCart() {
           setItems(cartItems)
           setLoading(false)
         },
-        (error) => {
-          console.error("Cart listener error:", error)
+        () => {
           toast.error("Failed to sync cart")
           setLoading(false)
         }

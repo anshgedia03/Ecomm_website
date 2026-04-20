@@ -101,9 +101,7 @@ export async function POST(request: NextRequest) {
     if (!firebaseLoginResponse.ok) {
       const errorBody =
         (await firebaseLoginResponse.json().catch(() => null)) as FirebaseLoginError | null
-      
-      console.error("Firebase Login Failed for:", parsedBody.email, "Error:", errorBody?.error?.message)
-      
+
       const message = mapFirebaseAuthError(errorBody?.error?.message)
       return errorResponse(message, 401)
     }
