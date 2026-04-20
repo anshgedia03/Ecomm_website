@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { jwtDecode } from "jwt-decode"
 import { IoCartSharp } from "react-icons/io5" 
 import { removeTokenFromLocalStorage } from "@/utils/tokenUtils"
+import { ENDPOINTS } from "@/constants/ENDPOINTS"
 import type { UserPayload } from "@/types"
 
 export default function Navbar() {
@@ -32,13 +33,18 @@ export default function Navbar() {
     }
   }, [pathname])
 
-  const handleLogout = () => {
-    //ew are handling logout here by removing token 
-    removeTokenFromLocalStorage()
+  const handleLogout = async () => {
+    try {
+      await fetch(ENDPOINTS.AUTH.LOGOUT, { method: "POST" })
+    } catch {
+      // Continue local logout even if server call fails.
+    }
 
-    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax"   
+    // we are handling client logout by removing token
+    removeTokenFromLocalStorage()
     setUser(null)
     router.push("/")
+    router.refresh()
   }
 
   return (

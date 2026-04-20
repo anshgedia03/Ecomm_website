@@ -2,6 +2,7 @@ export const ENDPOINTS = {
   AUTH: {
     LOGIN: "/api/auth/login",
     SIGNUP: "/api/auth/signup",
+    LOGOUT: "/api/auth/logout",
   },
   PRODUCTS: {
     BASE: "/api/products",
