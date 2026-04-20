@@ -1,13 +1,18 @@
+import Image from "next/image"
 import type { AdminProductCardProps } from "@/types"
 
 export default function Product({ data, onEdit, onDelete }: AdminProductCardProps) {
   return (
     <div className="overflow-hidden rounded-2xl border bg-white shadow-sm">
-      <img
-        src={data.imageUrl}
-        alt={data.title}
-        className="h-48 w-full object-contain"
-      />
+      <div className="relative h-48 w-full">
+        <Image
+          src={data.imageUrl}
+          alt={data.title}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          className="object-contain"
+        />
+      </div>
 
       <div className="p-4">
         <div className="mb-2 flex items-start justify-between gap-3">
