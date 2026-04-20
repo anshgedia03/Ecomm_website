@@ -67,7 +67,7 @@ function unauthorized(message: string, status = 401) {
   return NextResponse.json({ message }, { status })
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const method = request.method.toUpperCase()
   const session = readSession(request)

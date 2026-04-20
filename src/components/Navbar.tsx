@@ -35,7 +35,11 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await fetch(ENDPOINTS.AUTH.LOGOUT, { method: "POST" })
+      await fetch(ENDPOINTS.AUTH.LOGOUT, {
+        method: "POST",
+        credentials: "include",
+        cache: "no-store",
+      })
     } catch {
       // Continue local logout even if server call fails.
     }
