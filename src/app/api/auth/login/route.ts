@@ -150,9 +150,9 @@ export async function POST(request: NextRequest) {
 
     response.cookies.set("token", token, {
       path: "/",
-      maxAge: 60*60, //cookie is valid for 1 hr
+      maxAge: 60 * 60, //cookie is valid for 1 hr
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: false,
       sameSite: "lax",
     })
 
