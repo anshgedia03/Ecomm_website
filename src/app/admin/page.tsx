@@ -10,7 +10,7 @@ import { verifyAdminAccess } from "@/services/accessServices"
 import type { Product, ProductFormValues } from "@/types"
 
 const ProductCard = lazy(() => import("@/components/admin/product"))
-
+//defaultFormValues is a type of ProductFormValues
 const defaultFormValues: ProductFormValues = {
   title: "",
   price: "",
